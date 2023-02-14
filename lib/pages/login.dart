@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:provider/provider.dart';
 import 'package:second_hand_app/pages/fotgot_password.dart';
 import 'package:second_hand_app/pages/signup.dart';
+import 'package:second_hand_app/pages/user/google_sign_in.dart';
+import 'package:second_hand_app/pages/user/profile.dart';
 import 'package:second_hand_app/pages/user/user_main.dart';
 
 class Login extends StatefulWidget {
@@ -58,6 +61,7 @@ class _LoginState extends State<Login> {
       }
     }
   }
+
 
   @override
   void dispose() {
@@ -178,6 +182,8 @@ class _LoginState extends State<Login> {
                   ),
                 ],
               ),
+
+
               SignInButton(
                 Buttons.Google,
                 shape: RoundedRectangleBorder(
@@ -185,6 +191,8 @@ class _LoginState extends State<Login> {
                     )),
                 padding: const EdgeInsets.all(8.0),
                 onPressed: () {
+                  final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+                provider.googleLogin();
                 },
               ),
             ],
@@ -195,5 +203,6 @@ class _LoginState extends State<Login> {
   }
 
 }
+
 
 

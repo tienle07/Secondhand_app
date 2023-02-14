@@ -95,7 +95,7 @@ class _SignupState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("User SignUp"),
+        title: const Text("User SignUp"),
       ),
       body: Form(
         key: _formKey,
@@ -204,11 +204,11 @@ class _SignupState extends State<SignUp> {
                               pageBuilder:
                                   (context, animation1, animation2) =>
                                   Login(),
-                              transitionDuration: Duration(seconds: 0),
+                              transitionDuration: const Duration(seconds: 0),
                             ),
                           )
                         },
-                        child: Text('Login'))
+                        child: const Text('Login'))
                   ],
                 ),
               )

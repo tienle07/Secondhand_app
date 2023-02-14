@@ -1,35 +1,43 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:second_hand_app/pages/login.dart';
+import 'package:second_hand_app/pages/user/google_sign_in.dart';
+import 'package:second_hand_app/pages/user/home_page.dart';
 
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: _initialization,
-        builder: (context, snapshot) {
-          // Check for Errors
-          if (snapshot.hasError) {
-            print("Something Went Wrong");
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return MaterialApp(
+  Widget build(BuildContext context)  => ChangeNotifierProvider(
+      create: (context) => GoogleSignInProvider(),
+    // return FutureBuilder(
+    //     future: _initialization,
+    //     builder: (context, snapshot) {
+    //       // Check for Errors
+    //       if (snapshot.hasError) {
+    //         print("Something Went Wrong");
+    //       }
+    //       if (snapshot.connectionState == ConnectionState.waiting) {
+    //         return const Center(child: CircularProgressIndicator());
+    //       }
+           child: MaterialApp(
             title: 'Flutter Firebase EMail Password Auth',
             theme: ThemeData(
               primarySwatch: Colors.deepPurple,
             ),
             debugShowCheckedModeBanner: false,
-            home: Login(),
-          );
-        });
-  }
+            home: const HomePage(),
+          ),
+  );
+
 }
+
+
+
