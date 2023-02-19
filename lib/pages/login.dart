@@ -1,208 +1,200 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:provider/provider.dart';
-import 'package:second_hand_app/pages/fotgot_password.dart';
+import 'package:second_hand_app/authentication/auth_service.dart';
 import 'package:second_hand_app/pages/signup.dart';
-import 'package:second_hand_app/pages/user/google_sign_in.dart';
-import 'package:second_hand_app/pages/user/profile.dart';
-import 'package:second_hand_app/pages/user/user_main.dart';
 
-class Login extends StatefulWidget {
-  Login({Key? key}) : super(key: key);
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
-
-  var email = "";
-  var password = "";
-  // Create a text controller and use it to retrieve the current value
-  // of the TextField.
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  userLogin() async {
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => UserMain(),
-        ),
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print("No User Found for that Email");
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.orangeAccent,
-            content: Text(
-              "No User Found for that Email",
-              style: TextStyle(fontSize: 18.0, color: Colors.black),
-            ),
-          ),
-        );
-      } else if (e.code == 'wrong-password') {
-        print("Wrong Password Provided by User");
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.orangeAccent,
-            content: Text(
-              "Wrong Password Provided by User",
-              style: TextStyle(fontSize: 18.0, color: Colors.black),
-            ),
-          ),
-        );
-      }
-    }
-  }
-
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("User Login"),
-      ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-          child: ListView(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                child: TextFormField(
-                  autofocus: false,
-                  decoration: const InputDecoration(
-                    labelText: 'Email: ',
-                    labelStyle: TextStyle(fontSize: 20.0),
-                    border: OutlineInputBorder(),
-                    errorStyle:
-                    TextStyle(color: Colors.redAccent, fontSize: 15),
-                  ),
-                  controller: emailController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please Enter Email';
-                    } else if (!value.contains('@')) {
-                      return 'Please Enter Valid Email';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                child: TextFormField(
-                  autofocus: false,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Password: ',
-                    labelStyle: TextStyle(fontSize: 20.0),
-                    border: OutlineInputBorder(),
-                    errorStyle:
-                    TextStyle(color: Colors.redAccent, fontSize: 15),
-                  ),
-                  controller: passwordController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please Enter Password';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 60.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, otherwise false.
-                        if (_formKey.currentState!.validate()) {
-                          setState(() {
-                            email = emailController.text;
-                            password = passwordController.text;
-                          });
-                          userLogin();
-                        }
-                      },
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ForgotPassword(),
-                          ),
-                        )
-                      },
-                      child: const Text(
-                        'Forgot Password ?',
-                        style: TextStyle(fontSize: 14.0),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Don't have an Account? "),
-                  TextButton(
-                    onPressed: () => {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, a, b) => SignUp(),
-                            transitionDuration: const Duration(seconds: 0),
-                          ),
-                              (route) => false)
-                    },
-                    child: const Text('Signup'),
-                  ),
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Container(
+          padding: EdgeInsets.only(left: 16,right: 16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 50,),
+                  Text("Welcome,",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold),),
+                  SizedBox(height: 6,),
+                  Text("Sign in to continue!",style: TextStyle(fontSize: 20,color: Colors.grey.shade400),),
                 ],
               ),
-
-
-              SignInButton(
-                Buttons.Google,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16
-                    )),
-                padding: const EdgeInsets.all(8.0),
-                onPressed: () {
-                  final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-                provider.googleLogin();
-                },
+              Column(
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: "Email ID",
+                      labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Colors.grey.shade300,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: Colors.red,
+                          )
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16,),
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Colors.grey.shade300,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: Colors.red,
+                          )
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 12,),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Text("Forgot Password ?",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600),),
+                  ),
+                  SizedBox(height: 30,),
+                  Container(
+                    height: 50,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: (){},
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                        ),
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          gradient: const LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [
+                              Color(0xffff5f6d),
+                              Color(0xffff5f6d),
+                              Color(0xffffc371),
+                            ],
+                          ),
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          constraints: BoxConstraints(maxWidth: double.infinity,minHeight: 50),
+                          child: Text("Login",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16,),
+                  Container(
+                    height: 50,
+                    width: double.infinity,
+                    child: SignInButton(
+                      Buttons.Google,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16
+                          )),
+                      padding: const EdgeInsets.all(8.0),
+                      onPressed: () {
+                        AuthService().signInWithGoogle();
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 30,),
+                ],
               ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("I'm a new user.",style: TextStyle(fontWeight: FontWeight.bold),),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return SignUpPage();
+                        }));
+                      },
+                      child: Text("Sign up",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),
       ),
     );
+    // return Scaffold(
+    //   backgroundColor: Colors.white,
+    //   appBar: AppBar(
+    //     title: const Text("Secondhand_App"),
+    //     backgroundColor: Colors.yellow,
+    //   ),
+    //   body: Container(
+    //     width: size.width,
+    //     height: size.height,
+    //     padding: EdgeInsets.only(
+    //         left: 20,
+    //         right: 20,
+    //         top: size.height * 0.2,
+    //         bottom: size.height * 0.5),
+    //     child: Column(
+    //       crossAxisAlignment: CrossAxisAlignment.center,
+    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //       children: [
+    //         const Text("Hello \n",
+    //             style: TextStyle(
+    //               fontSize: 30,
+    //               color: Colors.yellow,
+    //             )),
+    //         SignInButton(
+    //           Buttons.Google,
+    //           shape: RoundedRectangleBorder(
+    //               borderRadius: BorderRadius.circular(16
+    //               )),
+    //           padding: const EdgeInsets.all(8.0),
+    //           onPressed: () {
+    //             AuthService().signInWithGoogle();
+    //           },
+    //         ),
+    //         // TextButton(
+    //         //   onPressed: () {
+    //         //     AuthService().signInWithGoogle();
+    //         //   },
+    //         //   child: Text('Login with Gooogle'),
+    //         //   //child: const Image(width: 100, image: AssetImage('assets/google.png'))
+    //         // ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
-
 }
-
 
 

@@ -1,43 +1,52 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:second_hand_app/pages/login.dart';
-import 'package:second_hand_app/pages/user/google_sign_in.dart';
-import 'package:second_hand_app/pages/user/home_page.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:second_hand_app/authentication/auth_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+  print("token: $fcmToken");
+  Future<void> _firebaseMessagingBackgroundHandler(
+      RemoteMessage message) async {
+    // If you're going to use other Firebase services in the background, such as Firestore,
+    // make sure you call `initializeApp` before using other Firebase services.
+    await Firebase.initializeApp();
+
+    print("Handling a background message: ${message.messageId}");
+  }
+
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print('Got a message whilst in the foreground!');
+    print('Message data: ${message.data}');
+
+    if (message.notification != null) {
+      print('Message also contained a notification: ${message.notification} ');
+    }
+  });
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context)  => ChangeNotifierProvider(
-      create: (context) => GoogleSignInProvider(),
-    // return FutureBuilder(
-    //     future: _initialization,
-    //     builder: (context, snapshot) {
-    //       // Check for Errors
-    //       if (snapshot.hasError) {
-    //         print("Something Went Wrong");
-    //       }
-    //       if (snapshot.connectionState == ConnectionState.waiting) {
-    //         return const Center(child: CircularProgressIndicator());
-    //       }
-           child: MaterialApp(
-            title: 'Flutter Firebase EMail Password Auth',
-            theme: ThemeData(
-              primarySwatch: Colors.deepPurple,
-            ),
-            debugShowCheckedModeBanner: false,
-            home: const HomePage(),
-          ),
-  );
-
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      themeMode: ThemeMode.system,
+      debugShowCheckedModeBanner: false,
+      home: AuthService().handleAuthState(),
+    );
+  }
 }
-
-
-
