@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:second_hand_app/authentication/auth_service.dart';
-import 'package:second_hand_app/pages/signup.dart';
+import 'package:second_hand_app/user/signup.dart';
+
 
 
 class LoginPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.only(left: 16,right: 16),
+          padding: const EdgeInsets.only(left: 16,right: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,10 +28,12 @@ class _LoginPageState extends State<LoginPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height: 50,),
-                  Text("Welcome,",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold),),
-                  SizedBox(height: 6,),
-                  Text("Sign in to continue!",style: TextStyle(fontSize: 20,color: Colors.grey.shade400),),
+                  const SizedBox(height: 50,),
+                  const Text("Welcome,",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 6,),
+                  Text("Sign in to continue!",style: TextStyle(fontSize: 20,color: Colors.grey.shade400),
+                  ),
                 ],
               ),
               Column(
@@ -47,13 +50,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Colors.red,
                           )
                       ),
                     ),
                   ),
-                  SizedBox(height: 16,),
+                  const SizedBox(height: 16,),
                   TextField(
                     decoration: InputDecoration(
                       labelText: "Password",
@@ -66,18 +69,18 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Colors.red,
                           )
                       ),
                     ),
                   ),
                   SizedBox(height: 12,),
-                  Align(
+                  const Align(
                     alignment: Alignment.topRight,
                     child: Text("Forgot Password ?",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600),),
                   ),
-                  SizedBox(height: 30,),
+                  const SizedBox(height: 30,),
                   Container(
                     height: 50,
                     width: double.infinity,
@@ -104,13 +107,14 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         child: Container(
                           alignment: Alignment.center,
-                          constraints: BoxConstraints(maxWidth: double.infinity,minHeight: 50),
-                          child: Text("Login",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+                          constraints: const BoxConstraints(maxWidth: double.infinity,minHeight: 50),
+                          child: const Text("Login",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 16,),
+                  const SizedBox(height: 16,),
                   Container(
                     height: 50,
                     width: double.infinity,
@@ -125,22 +129,25 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
-                  SizedBox(height: 30,),
+                  const SizedBox(height: 30,
+                  ),
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("I'm a new user.",style: TextStyle(fontWeight: FontWeight.bold),),
+                    const Text("I'm a new user.",style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     GestureDetector(
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context){
                           return SignUpPage();
                         }));
                       },
-                      child: Text("Sign up",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),),
+                      child: const Text("Sign up",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),
+                      ),
                     )
                   ],
                 ),
@@ -150,6 +157,9 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+
+
+
     // return Scaffold(
     //   backgroundColor: Colors.white,
     //   appBar: AppBar(

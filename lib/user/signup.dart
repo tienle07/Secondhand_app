@@ -124,7 +124,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         child: Container(
                           alignment: Alignment.center,
                           constraints: const BoxConstraints(minHeight: 50,maxWidth: double.infinity),
-                          child: const Text("Sign up",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,),
+                          child: const Text("Sign up",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
                     ),
@@ -137,12 +138,14 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text("I'm already a member.",style: TextStyle(fontWeight: FontWeight.bold),),
+                    const Text("I'm already a member.",style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     GestureDetector(
                       onTap: (){
                         Navigator.pop(context);
                       },
-                      child: const Text("Sign in.",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),),
+                      child: const Text("Sign in.",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),
+                      ),
                     )
                   ],
                 ),

@@ -1,18 +1,19 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:second_hand_app/authentication/auth_service.dart';
 
-class HomePage extends StatefulWidget {
+class Profile extends StatefulWidget {
+  const Profile({Key? key}) : super(key: key);
+
   @override
-  _HomePageState createState() => _HomePageState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ProfileState extends State<Profile> {
+
   final user = FirebaseAuth.instance.currentUser;
   PlatformFile? pickedFile;
   UploadTask? uploadTask;
@@ -38,14 +39,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // return Scaffold(
+    //   appBar: AppBar(title: const Text('Profile Screens')),
+    //   body: const Center(
+    //     child: Text('Profile Screen', style: TextStyle(fontSize: 40)),
+    //   ),
+    // );
+
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //     children: [
-      //       const Text("Welcome User"),
-      //    ),
-      // ),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -120,39 +122,10 @@ class _HomePageState extends State<HomePage> {
               ),
               onPressed: () {
                 AuthService().signOut();
-              },
+               },
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border),
-            label: 'Saved',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.post_add_outlined),
-            label: 'News',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            label: 'Product',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Account',
-          ),
-        ],
-        //currentIndex: _selectedIndex,
-        selectedItemColor: Colors.yellow,
-        unselectedItemColor: Colors.black,
-        //onTap: _onItemTapped,
       ),
     );
   }
