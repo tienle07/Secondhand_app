@@ -1,155 +1,43 @@
-
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:second_hand_app/user/login.dart';
+//
+import '../widget/rep_textfiled.dart';
+import '../utils/constanst.dart';
 
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
-
-  @override
-  State<SignUpPage> createState() => _SignUpPageState();
-}
-
-class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.only(left: 16,right: 16),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: Container(
+          margin: EdgeInsets.all(15),
+          width: gWidth,
+          height: gHeight,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const SizedBox(height: 50,),
-                  const Text("Create Account,",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 6,),
-                  Text("Sign up to get started!",style: TextStyle(fontSize: 20,color: Colors.grey.shade400),),
-                ],
+            children: [
+              TopImage(),
+              SignUpText(),
+              SizedBox(height: 10),
+              EmailTextFiled(),
+              SizedBox(height: 20),
+              FullNameTextFiled(),
+              SizedBox(height: 20),
+              MobileTextFiled(),
+              SizedBox(
+                height: 25,
               ),
-              Column(
-                children: <Widget>[
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: "Full Name",
-                      labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400,fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Colors.red),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    ),
-                  ),
-                  const SizedBox(height: 16,),
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: "Email ID",
-                      labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400,fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Colors.red),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    ),
-                  ),
-                  const SizedBox(height: 16,),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: "Password",
-                      labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400,fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Colors.red),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    ),
-                  ),
-                  const SizedBox(height: 16,),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: "Confirm Password",
-                      labelStyle: TextStyle(fontSize: 14,color: Colors.grey.shade400,fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Colors.red),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    ),
-                  ),
-                  const SizedBox(height: 30,),
-                  Container(
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: (){},
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      child: Ink(
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              Color(0xffff5f6d),
-                              Color(0xffff5f6d),
-                              Color(0xffffc371),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          constraints: const BoxConstraints(minHeight: 50,maxWidth: double.infinity),
-                          child: const Text("Sign up",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 30,),
-                ],
+              BottomText(),
+              SizedBox(
+                height: 25,
               ),
-              Container(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Text("I'm already a member.",style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.pop(context);
-                      },
-                      child: const Text("Sign in.",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),
-                      ),
-                    )
-                  ],
-                ),
-              )
+              ContinueButton(),
+              LoginText()
             ],
           ),
         ),
@@ -157,3 +45,214 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 }
+
+// Login Text Components
+class LoginText extends StatelessWidget {
+  const LoginText({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeInDown(
+      child: GestureDetector(
+        onTap: () {
+          Get.offAll(
+                () => LoginScreen(),
+            transition: Transition.leftToRight,
+          );
+        },
+        child: Container(
+          margin: EdgeInsets.only(top: 22),
+          width: gWidth / 2,
+          height: gHeight / 32,
+          child: FittedBox(
+            child: RichText(
+              text: TextSpan(
+                text: "Joined us before?",
+                style: TextStyle(color: text1Color),
+                children: [
+                  TextSpan(
+                    text: "  Login",
+                    style: TextStyle(
+                      color: buttonColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Continue Button Components
+class ContinueButton extends StatelessWidget {
+  const ContinueButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeInDown(
+      delay: Duration(milliseconds: 400),
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        width: gWidth,
+        height: gHeight / 15,
+        child: ElevatedButton(
+          onPressed: () {
+            Get.offAll(SignUpScreen());
+          },
+          child: Text("Continue"),
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            backgroundColor: MaterialStateProperty.all(buttonColor),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Bottom Text Components
+class BottomText extends StatelessWidget {
+  const BottomText({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeInDown(
+      delay: Duration(milliseconds: 800),
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        width: gWidth,
+        height: gHeight / 21,
+        child: RichText(
+          text: TextSpan(
+              text: "By siging up, you\'re agree to our",
+              style: TextStyle(
+                color: Color.fromARGB(255, 90, 90, 90),
+              ),
+              children: [
+                TextSpan(
+                  text: " Terms & Conditions",
+                  style: TextStyle(color: buttonColor),
+                ),
+                TextSpan(
+                  text: " and ",
+                  style: TextStyle(color: Color.fromARGB(255, 90, 90, 90)),
+                ),
+                TextSpan(
+                  text: " Privacy Policy",
+                  style: TextStyle(color: buttonColor),
+                ),
+              ]),
+        ),
+      ),
+    );
+  }
+}
+
+// Mobile TextFiled Components
+class MobileTextFiled extends StatelessWidget {
+  const MobileTextFiled({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeInDown(
+        delay: Duration(milliseconds: 1200),
+        child:
+        RepTextFiled(icon: LineIcons.phone, text: "Mobile", sufIcon: null));
+  }
+}
+
+// FullName TextFiled Components
+class FullNameTextFiled extends StatelessWidget {
+  const FullNameTextFiled({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeInDown(
+        delay: Duration(milliseconds: 1400),
+        child: RepTextFiled(
+            icon: LineIcons.user, text: "Full name", sufIcon: null));
+  }
+}
+
+// Email TextFiled Components
+class EmailTextFiled extends StatelessWidget {
+  const EmailTextFiled({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeInDown(
+        delay: Duration(milliseconds: 1800),
+        child:
+        RepTextFiled(icon: LineIcons.at, text: "Email ID", sufIcon: null));
+  }
+}
+
+// Top Sign UP Text Components
+class SignUpText extends StatelessWidget {
+  const SignUpText({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeInLeft(
+      delay: Duration(milliseconds: 2100),
+      child: Container(
+        margin: EdgeInsets.only(right: 250, top: 10),
+        width: gWidth / 3.5,
+        height: gHeight / 17,
+        child: FittedBox(
+          child: Text(
+            "Sign up",
+            style: TextStyle(
+              fontSize: 35,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Top Image Components
+class TopImage extends StatelessWidget {
+  const TopImage({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeInDown(
+      delay: Duration(milliseconds: 2500),
+      child: Container(
+        width: gWidth,
+        height: gHeight / 2.85,
+        child: Image.asset(
+          "assets/images/sign.png",
+        ),
+      ),
+    );
+  }
+}
+
