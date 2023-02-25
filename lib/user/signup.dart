@@ -16,11 +16,11 @@ class SignUpScreen extends StatelessWidget {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         body: Container(
-          margin: EdgeInsets.all(15),
+          margin: const EdgeInsets.all(15),
           width: gWidth,
           height: gHeight,
           child: Column(
-            children: [
+            children: const [
               TopImage(),
               SignUpText(),
               SizedBox(height: 10),
@@ -58,7 +58,7 @@ class LoginText extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           Get.offAll(
-                () => LoginScreen(),
+                () => const LoginScreen(),
             transition: Transition.leftToRight,
           );
         },
@@ -68,7 +68,7 @@ class LoginText extends StatelessWidget {
           height: gHeight / 32,
           child: FittedBox(
             child: RichText(
-              text: TextSpan(
+              text: const TextSpan(
                 text: "Joined us before?",
                 style: TextStyle(color: text1Color),
                 children: [
@@ -98,16 +98,15 @@ class ContinueButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(milliseconds: 400),
+      delay: const Duration(milliseconds: 400),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 5),
         width: gWidth,
         height: gHeight / 15,
         child: ElevatedButton(
           onPressed: () {
-            Get.offAll(SignUpScreen());
+            Get.offAll(const SignUpScreen());
           },
-          child: Text("Continue"),
           style: ButtonStyle(
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
@@ -116,6 +115,7 @@ class ContinueButton extends StatelessWidget {
             ),
             backgroundColor: MaterialStateProperty.all(buttonColor),
           ),
+          child: Text("Continue"),
         ),
       ),
     );
@@ -131,13 +131,13 @@ class BottomText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(milliseconds: 800),
+      delay: const Duration(milliseconds: 800),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
         width: gWidth,
         height: gHeight / 21,
         child: RichText(
-          text: TextSpan(
+          text: const TextSpan(
               text: "By siging up, you\'re agree to our",
               style: TextStyle(
                 color: Color.fromARGB(255, 90, 90, 90),
@@ -171,7 +171,7 @@ class MobileTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-        delay: Duration(milliseconds: 1200),
+        delay: const Duration(milliseconds: 1200),
         child:
         RepTextFiled(icon: LineIcons.phone, text: "Mobile", sufIcon: null));
   }
@@ -186,7 +186,7 @@ class FullNameTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-        delay: Duration(milliseconds: 1400),
+        delay: const Duration(milliseconds: 1400),
         child: RepTextFiled(
             icon: LineIcons.user, text: "Full name", sufIcon: null));
   }
@@ -201,7 +201,7 @@ class EmailTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-        delay: Duration(milliseconds: 1800),
+        delay: const Duration(milliseconds: 1800),
         child:
         RepTextFiled(icon: LineIcons.at, text: "Email ID", sufIcon: null));
   }
@@ -216,12 +216,12 @@ class SignUpText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInLeft(
-      delay: Duration(milliseconds: 2100),
+      delay: const Duration(milliseconds: 2100),
       child: Container(
-        margin: EdgeInsets.only(right: 250, top: 10),
+        margin: const EdgeInsets.only(right: 250, top: 10),
         width: gWidth / 3.5,
         height: gHeight / 17,
-        child: FittedBox(
+        child: const FittedBox(
           child: Text(
             "Sign up",
             style: TextStyle(
@@ -244,8 +244,8 @@ class TopImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(milliseconds: 2500),
-      child: Container(
+      delay: const Duration(milliseconds: 2500),
+      child: SizedBox(
         width: gWidth,
         height: gHeight / 2.85,
         child: Image.asset(

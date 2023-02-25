@@ -5,21 +5,14 @@ import 'package:line_icons/line_icons.dart';
 import 'package:second_hand_app/authentication/auth_service.dart';
 import 'package:second_hand_app/user/forgotpass.dart';
 import 'package:second_hand_app/user/signup.dart';
-//
 
 import '../utils/constanst.dart';
 import '../widget/rep_textfiled.dart';
 
-
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-/////////////////////////////////////
-//@CodeWithFlexz on Instagram
-//
-//AmirBayat0 on Github
-//Programming with Flexz on Youtube
-/////////////////////////////////////
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -69,7 +62,7 @@ class RegisterText extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           Get.offAll(
-                () => const SignUpScreen(),
+            () => const SignUpScreen(),
             transition: Transition.leftToRight,
           );
         },
@@ -79,7 +72,7 @@ class RegisterText extends StatelessWidget {
           height: gHeight / 32,
           child: FittedBox(
             child: RichText(
-              text: TextSpan(
+              text: const TextSpan(
                 text: "New to Logistic?",
                 style: TextStyle(color: text1Color),
                 children: [
@@ -109,35 +102,15 @@ class GoogleLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(milliseconds: 600),
+      delay: const Duration(milliseconds: 600),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 5),
         width: gWidth,
         height: gHeight / 15,
         child: ElevatedButton(
           onPressed: () {
             AuthService().signInWithGoogle();
           },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 30,
-              ),
-              SizedBox(
-                width: 40,
-                height: 40,
-                child: Image.network(
-                    "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"),
-              ),
-              SizedBox(
-                width: 40,
-              ),
-              Text(
-                "Login with Google",
-                style: TextStyle(color: Color.fromARGB(255, 90, 90, 90)),
-              ),
-            ],
-          ),
           style: ButtonStyle(
             overlayColor: MaterialStateProperty.all(
               buttonColor.withOpacity(0.2),
@@ -148,7 +121,27 @@ class GoogleLoginButton extends StatelessWidget {
               ),
             ),
             backgroundColor:
-            MaterialStateProperty.all(Color.fromARGB(255, 238, 238, 238)),
+                MaterialStateProperty.all(Color.fromARGB(255, 238, 238, 238)),
+          ),
+          child: Row(
+            children: [
+              const SizedBox(
+                width: 30,
+              ),
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: Image.network(
+                    "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"),
+              ),
+              const SizedBox(
+                width: 40,
+              ),
+              const Text(
+                "Login with Google",
+                style: TextStyle(color: Color.fromARGB(255, 90, 90, 90)),
+              ),
+            ],
           ),
         ),
       ),
@@ -165,8 +158,8 @@ class OrText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(milliseconds: 1000),
-      child: Container(
+      delay: const Duration(milliseconds: 1000),
+      child: SizedBox(
         width: gWidth,
         child: Center(
           child: Row(
@@ -177,7 +170,7 @@ class OrText extends StatelessWidget {
                 height: 0.5,
                 color: iconColor,
               ),
-              Text(
+              const Text(
                 "  OR  ",
                 style: TextStyle(color: iconColor, fontSize: 20),
               ),
@@ -203,16 +196,15 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(milliseconds: 1400),
+      delay: const Duration(milliseconds: 1400),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 5),
         width: gWidth,
         height: gHeight / 15,
         child: ElevatedButton(
           onPressed: () {
-            Get.offAll(LoginScreen());
+            Get.offAll(const LoginScreen());
           },
-          child: Text("Login"),
           style: ButtonStyle(
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
@@ -221,6 +213,7 @@ class LoginButton extends StatelessWidget {
             ),
             backgroundColor: MaterialStateProperty.all(buttonColor),
           ),
+          child: const Text("Login"),
         ),
       ),
     );
@@ -236,11 +229,11 @@ class ForgotText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(milliseconds: 1800),
+      delay: const Duration(milliseconds: 1800),
       child: GestureDetector(
         onTap: () {
           Get.to(
-                () => ForgotPasswordScreen(),
+            () => const ForgotPasswordScreen(),
             transition: Transition.leftToRight,
           );
         },
@@ -248,7 +241,7 @@ class ForgotText extends StatelessWidget {
           margin: EdgeInsets.only(left: 240, top: 20),
           width: gWidth / 3.7,
           height: gHeight / 32,
-          child: FittedBox(
+          child: const FittedBox(
             child: Text(
               "Forgot Password?",
               style: TextStyle(color: buttonColor, fontWeight: FontWeight.w500),
@@ -269,9 +262,9 @@ class PasswordTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(milliseconds: 2300),
+      delay: const Duration(milliseconds: 2300),
       child: RepTextFiled(
-        sufIcon: Icon(LineIcons.eyeSlash),
+        sufIcon: const Icon(LineIcons.eyeSlash),
         icon: LineIcons.alternateUnlock,
         text: "Password",
       ),
@@ -288,7 +281,7 @@ class EmailTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(milliseconds: 2900),
+      delay: const Duration(milliseconds: 2900),
       child: RepTextFiled(
         sufIcon: null,
         icon: LineIcons.at,
@@ -307,12 +300,12 @@ class LoginText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInLeft(
-      delay: Duration(milliseconds: 3200),
+      delay: const Duration(milliseconds: 3200),
       child: Container(
         margin: EdgeInsets.only(right: 270, top: 10),
         width: gWidth / 4,
         height: gHeight / 18,
-        child: FittedBox(
+        child: const FittedBox(
           child: Text(
             "Login",
             style: TextStyle(
@@ -335,8 +328,8 @@ class TopImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(milliseconds: 3800),
-      child: Container(
+      delay: const Duration(milliseconds: 3800),
+      child: SizedBox(
         width: gWidth,
         height: gHeight / 2.85,
         child: Image.asset(
@@ -347,59 +340,47 @@ class TopImage extends StatelessWidget {
   }
 }
 
-
-
-
-
-
-
-
-
-
 // return Scaffold(
-    //   backgroundColor: Colors.white,
-    //   appBar: AppBar(
-    //     title: const Text("Secondhand_App"),
-    //     backgroundColor: Colors.yellow,
-    //   ),
-    //   body: Container(
-    //     width: size.width,
-    //     height: size.height,
-    //     padding: EdgeInsets.only(
-    //         left: 20,
-    //         right: 20,
-    //         top: size.height * 0.2,
-    //         bottom: size.height * 0.5),
-    //     child: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.center,
-    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //       children: [
-    //         const Text("Hello \n",
-    //             style: TextStyle(
-    //               fontSize: 30,
-    //               color: Colors.yellow,
-    //             )),
-    //         SignInButton(
-    //           Buttons.Google,
-    //           shape: RoundedRectangleBorder(
-    //               borderRadius: BorderRadius.circular(16
-    //               )),
-    //           padding: const EdgeInsets.all(8.0),
-    //           onPressed: () {
-    //             AuthService().signInWithGoogle();
-    //           },
-    //         ),
-    //         // TextButton(
-    //         //   onPressed: () {
-    //         //     AuthService().signInWithGoogle();
-    //         //   },
-    //         //   child: Text('Login with Gooogle'),
-    //         //   //child: const Image(width: 100, image: AssetImage('assets/google.png'))
-    //         // ),
-    //       ],
-    //     ),
-    //   ),
-    // );
-
-
-
+//   backgroundColor: Colors.white,
+//   appBar: AppBar(
+//     title: const Text("Secondhand_App"),
+//     backgroundColor: Colors.yellow,
+//   ),
+//   body: Container(
+//     width: size.width,
+//     height: size.height,
+//     padding: EdgeInsets.only(
+//         left: 20,
+//         right: 20,
+//         top: size.height * 0.2,
+//         bottom: size.height * 0.5),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.center,
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         const Text("Hello \n",
+//             style: TextStyle(
+//               fontSize: 30,
+//               color: Colors.yellow,
+//             )),
+//         SignInButton(
+//           Buttons.Google,
+//           shape: RoundedRectangleBorder(
+//               borderRadius: BorderRadius.circular(16
+//               )),
+//           padding: const EdgeInsets.all(8.0),
+//           onPressed: () {
+//             AuthService().signInWithGoogle();
+//           },
+//         ),
+//         // TextButton(
+//         //   onPressed: () {
+//         //     AuthService().signInWithGoogle();
+//         //   },
+//         //   child: Text('Login with Gooogle'),
+//         //   //child: const Image(width: 100, image: AssetImage('assets/google.png'))
+//         // ),
+//       ],
+//     ),
+//   ),
+// );

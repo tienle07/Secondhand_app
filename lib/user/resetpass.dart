@@ -17,18 +17,18 @@ class ResetPasswordScreen extends StatelessWidget {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(45),
+          preferredSize: const Size.fromHeight(45),
           child: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: FadeInLeft(
-              delay: Duration(milliseconds: 2100),
+              delay: const Duration(milliseconds: 2100),
               child: IconButton(
                 onPressed: () {
                   Get.back();
                   Get.find<SubmitController>().isSubmit.value = false;
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back_ios,
                   color: Colors.black,
                 ),
@@ -37,7 +37,7 @@ class ResetPasswordScreen extends StatelessWidget {
           ),
         ),
         body: Container(
-          margin: EdgeInsets.only(
+          margin: const EdgeInsets.only(
             right: 15,
             left: 15,
             bottom: 15,
@@ -46,17 +46,17 @@ class ResetPasswordScreen extends StatelessWidget {
           height: gHeight,
           child: Column(
             children: [
-              TopImage(),
-              ResetText(),
-              SizedBox(
+              const TopImage(),
+              const ResetText(),
+              const SizedBox(
                 height: 20,
               ),
-              NewPasswordTextFiled(),
-              SizedBox(
+              const NewPasswordTextFiled(),
+              const SizedBox(
                 height: 20,
               ),
-              ConfirmNewPasswordTextFiled(),
-              SizedBox(height: 50),
+              const ConfirmNewPasswordTextFiled(),
+              const SizedBox(height: 50),
               SubmitButton()
             ],
           ),
@@ -69,14 +69,16 @@ class ResetPasswordScreen extends StatelessWidget {
 // Submit Button Components
 class SubmitButton extends StatelessWidget {
   //
-  var _submitController = Get.find<SubmitController>();
+  final _submitController = Get.find<SubmitController>();
+
+   SubmitButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(microseconds: 200),
+      delay: const Duration(microseconds: 200),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 5),
         width: gWidth,
         height: gHeight / 15,
         child: GetBuilder<SubmitController>(builder: (context) {
@@ -84,11 +86,19 @@ class SubmitButton extends StatelessWidget {
             onPressed: () {
               _submitController.submiting();
             },
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              backgroundColor: MaterialStateProperty.all(buttonColor),
+            ),
             child: _submitController.isSubmit == false
-                ? Text("Submit")
+                ? const Text("Submit")
                 : Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 SizedBox(
                   height: 20,
                   width: 20,
@@ -101,14 +111,6 @@ class SubmitButton extends StatelessWidget {
                 ),
                 Text("Submitting..."),
               ],
-            ),
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-              backgroundColor: MaterialStateProperty.all(buttonColor),
             ),
           );
         }),
@@ -126,7 +128,7 @@ class ConfirmNewPasswordTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(milliseconds: 600),
+      delay: const Duration(milliseconds: 600),
       child: RepTextFiled(
         icon: LineIcons.alternateUnlock,
         text: "Confirm new password",
@@ -145,7 +147,7 @@ class NewPasswordTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(milliseconds: 1000),
+      delay: const Duration(milliseconds: 1000),
       child: RepTextFiled(
         icon: LineIcons.alternateUnlock,
         text: "New password",
@@ -164,12 +166,12 @@ class ResetText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInLeft(
-      delay: Duration(milliseconds: 1400),
+      delay: const Duration(milliseconds: 1400),
       child: Container(
-        margin: EdgeInsets.only(right: 160, top: 10),
+        margin: const EdgeInsets.only(right: 160, top: 10),
         width: gWidth / 2,
         height: gHeight / 8,
-        child: FittedBox(
+        child: const FittedBox(
           child: Text(
             "Reset\nPassword",
             style: TextStyle(
@@ -192,8 +194,8 @@ class TopImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
-      delay: Duration(milliseconds: 1800),
-      child: Container(
+      delay: const Duration(milliseconds: 1800),
+      child: SizedBox(
         width: gWidth,
         height: gHeight / 2.7,
         child: Image.asset(
