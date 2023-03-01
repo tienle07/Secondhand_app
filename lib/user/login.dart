@@ -121,7 +121,7 @@ class GoogleLoginButton extends StatelessWidget {
               ),
             ),
             backgroundColor:
-                MaterialStateProperty.all(Color.fromARGB(255, 238, 238, 238)),
+                MaterialStateProperty.all(const Color.fromARGB(255, 238, 238, 238)),
           ),
           child: Row(
             children: [

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 class SubmitController extends GetxController {
   var isSubmit = false.obs;
 
-  void submiting() {
+  void submitting() {
     isSubmit.value = !isSubmit.value;
     update();
   }

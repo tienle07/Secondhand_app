@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:second_hand_app/authentication/auth_service.dart';
+import 'package:second_hand_app/bindings/bindings.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,11 +42,13 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       themeMode: ThemeMode.system,
+      initialBinding: MyBindings(),
       debugShowCheckedModeBanner: false,
       home: AuthService().handleAuthState(),
     );

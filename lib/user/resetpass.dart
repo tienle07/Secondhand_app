@@ -84,7 +84,7 @@ class SubmitButton extends StatelessWidget {
         child: GetBuilder<SubmitController>(builder: (context) {
           return ElevatedButton(
             onPressed: () {
-              _submitController.submiting();
+              _submitController.submitting();
             },
             style: ButtonStyle(
               shape: MaterialStateProperty.all(
