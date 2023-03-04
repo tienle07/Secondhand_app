@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 //
-import '../utils/constanst.dart';
+import '../utils/constant.dart';
 
 class RepTextFiled extends StatelessWidget {
   final IconData icon;
   final Widget? sufIcon;
   final String text;
-  RepTextFiled({required this.icon, required this.text,required this.sufIcon,});
+  const RepTextFiled({super.key, required this.icon, required this.text,required this.sufIcon,});
 
   @override
   Widget build(BuildContext context) {

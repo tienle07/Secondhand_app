@@ -5,7 +5,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:second_hand_app/user/login.dart';
 //
 import '../widget/rep_textfiled.dart';
-import '../utils/constanst.dart';
+import '../utils/constant.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);

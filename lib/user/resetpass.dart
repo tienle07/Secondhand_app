@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 //
-import '../utils/constanst.dart';
+import '../utils/constant.dart';
 import '../widget/rep_textfiled.dart';
 import '../controller/submit.dart';
 

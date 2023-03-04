@@ -6,7 +6,7 @@ import 'package:second_hand_app/authentication/auth_service.dart';
 import 'package:second_hand_app/user/forgotpass.dart';
 import 'package:second_hand_app/user/signup.dart';
 
-import '../utils/constanst.dart';
+import '../utils/constant.dart';
 import '../widget/rep_textfiled.dart';
 
 class LoginScreen extends StatelessWidget {

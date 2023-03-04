@@ -5,7 +5,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:second_hand_app/user/resetpass.dart';
 
 //
-import '../utils/constanst.dart';
+import '../utils/constant.dart';
 import '../widget/rep_textfiled.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
