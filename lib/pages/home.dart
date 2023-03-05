@@ -113,7 +113,7 @@ class _HomeState extends State<HomePage> {
                         ),
                         child: Icon(Icons.search),
                       ),
-                      hintText: 'Sarch clothes...',
+                      hintText: 'Search products...',
                       border: kInputBorder,
                       errorBorder: kInputBorder,
                       disabledBorder: kInputBorder,
