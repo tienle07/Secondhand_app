@@ -1,132 +1,91 @@
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:second_hand_app/authentication/auth_service.dart';
 
-class Profile extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:second_hand_app/pages/update_profile.dart';
+import 'package:second_hand_app/utils/text_string.dart';
+import 'package:second_hand_app/widget/profile_menu.dart';
+
+class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
 
   @override
-  State<Profile> createState() => _ProfileState();
-}
-
-class _ProfileState extends State<Profile> {
-
-  final user = FirebaseAuth.instance.currentUser;
-  PlatformFile? pickedFile;
-  UploadTask? uploadTask;
-
-  Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result == null) return;
-    setState(() {
-      pickedFile = result.files.first;
-    });
-  }
-
-  Future uploadFile() async {
-    final path = 'assets/images/avatar/${pickedFile!.name}';
-    final file = File(pickedFile!.path!);
-    final ref = FirebaseStorage.instance.ref().child(path);
-    ref.putFile(file);
-    final snapshot = await uploadTask!.whenComplete(() {});
-    final urlDownload = await snapshot.ref.getDownloadURL();
-    print('Download Link: $urlDownload');
-  }
-
-
-  @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   appBar: AppBar(title: const Text('Profile Screens')),
-    //   body: const Center(
-    //     child: Text('Profile Screen', style: TextStyle(fontSize: 40)),
-    //   ),
-    // );
+
+    var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    var iconColor = isDark ? tPrimaryColor : tAccentColor;
 
     return Scaffold(
-
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (pickedFile != null)
-              Expanded(
-                child: Container(
-                  color: Colors.blue[100],
-                  child: Image.file(
-                    File(pickedFile!.path!),
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {}, icon: const Icon(LineAwesomeIcons.angle_left)),
+        title: const Text(tProfile),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon))
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(tDefaultSize),
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  SizedBox(
+                    width: 120,
+                    height: 120,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: const Image(image: AssetImage("assets/images/profile.png"))),
                   ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      width: 35,
+                      height: 35,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: tPrimaryColor
+                      ),
+                      child:const Icon(LineAwesomeIcons.alternate_pencil, size: 20, color: Colors.black),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Text(tProfileHeading, style:Theme.of(context).textTheme.headlineSmall),
+              Text(tProfileSubHeading, style:Theme.of(context).textTheme.bodySmall),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 200,
+                child: ElevatedButton(
+                  onPressed: () => Get.to(() => const UpdateProfileScreen()),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: tPrimaryColor, side: BorderSide.none, shape: const StadiumBorder()),
+                  child: const Text(tEditProfile, style: TextStyle(color: tDarkColor)),
                 ),
               ),
-            const SizedBox(
-              height: 10,
-            ),
-            MaterialButton(
-              padding: const EdgeInsets.all(10),
-              color: Colors.yellow,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5)),
-              onPressed: selectFile,
-              child: const Text(
-                'Choose file..',
-                style: TextStyle(color: Colors.white, fontSize: 15),
-              ),
-            ),
-            const SizedBox(
-              height: 32,
-            ),
-            MaterialButton(
-              padding: const EdgeInsets.all(10),
-              color: Colors.yellow,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5)),
-              onPressed: uploadFile,
-              child: const Text(
-                'Upload',
-                style: TextStyle(color: Colors.white, fontSize: 15),
-              ),
-            ),
-            Text(
-              FirebaseAuth.instance.currentUser!.displayName!,
-              style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              FirebaseAuth.instance.currentUser!.email!,
-              style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            MaterialButton(
-              padding: const EdgeInsets.all(10),
-              color: Colors.yellow,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5)),
-              child: const Text(
-                'LOG OUT',
-                style: TextStyle(color: Colors.white, fontSize: 15),
-              ),
-              onPressed: () {
-                AuthService().signOut();
-               },
-            ),
-          ],
+              const SizedBox(height: 30),
+              const Divider(),
+              const SizedBox(height: 10),
+
+              //MENU
+              ProfileMenuWidget(title: "Settings", icon: LineAwesomeIcons.cog, onPress: () {}),
+              ProfileMenuWidget(title: "Billing Details", icon: LineAwesomeIcons.wallet, onPress: () {}),
+              ProfileMenuWidget(title: "User Management", icon: LineAwesomeIcons.user_check, onPress: () {}),
+              const Divider(color: Colors.grey),
+              const SizedBox(height: 10),
+              ProfileMenuWidget(title: "Information", icon: LineAwesomeIcons.info, onPress: () {}),
+              ProfileMenuWidget(title: "Logout", icon: LineAwesomeIcons.alternate_sign_out,  textColor: Colors.red, endIcon: false, onPress: () {}),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
+
