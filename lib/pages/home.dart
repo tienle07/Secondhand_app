@@ -1,10 +1,10 @@
-import 'dart:ui';
-
+import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import 'package:second_hand_app/pages/cart.dart';
+import 'package:second_hand_app/model/post_model.dart';
+import 'package:http/http.dart' as http;
 import 'package:second_hand_app/pages/product_detail_page.dart';
 import 'package:second_hand_app/utils/app_styles.dart';
 import 'package:second_hand_app/utils/size_config.dart';
@@ -17,6 +17,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomeState extends State<HomePage> {
+
+
+  Future<PostModel> getProductsApi() async {
+    final response = await http
+        .get(Uri.parse('https://secondhandvinhome.herokuapp.com/api/post'));
+    var data = jsonDecode(response.body.toString());
+    if (response.statusCode == 200) {
+      return PostModel.fromJson(data);
+    } else {
+      return PostModel.fromJson(data);
+    }
+  }
+
+  final user = FirebaseAuth.instance.currentUser;
 
   List<String> categories = [
     "All Items",
@@ -70,7 +84,7 @@ class _HomeState extends State<HomePage> {
                       ),
                     ),
                     Text(
-                      'Albert Stefano',
+                      FirebaseAuth.instance.currentUser!.displayName!,
                       style: kEncodeSansBold.copyWith(
                         color: kDarkBrown,
                         fontSize: SizeConfig.blockSizeHorizontal! * 4,
@@ -78,11 +92,10 @@ class _HomeState extends State<HomePage> {
                     ),
                   ],
                 ),
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 20,
-                  backgroundColor: kGrey,
                   backgroundImage: NetworkImage(
-                      'https://randomuser.me/api/portraits/women/90.jpg'),
+                      FirebaseAuth.instance.currentUser!.photoURL!),
                 )
               ],
             ),
@@ -179,9 +192,9 @@ class _HomeState extends State<HomePage> {
                       border: current == index
                           ? null
                           : Border.all(
-                        color: kLightGrey,
-                        width: 1,
-                      ),
+                              color: kLightGrey,
+                              width: 1,
+                            ),
                     ),
                     child: Row(
                       children: [
@@ -208,116 +221,112 @@ class _HomeState extends State<HomePage> {
           const SizedBox(
             height: 32,
           ),
-          MasonryGridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 23,
-            itemCount: images.length,
-            padding: const EdgeInsets.symmetric(
-              horizontal: kPaddingHorizontal,
-            ),
-            itemBuilder: (context, index) =>
-                GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductDetailPage(),
-                        ),
-                      );
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Stack(
-                          children: [
-                            Positioned(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                    kBorderRadius),
-                                child: Image.asset(
-                                  'assets/images/${images[index]}',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              right: 12,
-                              top: 12,
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: SvgPicture.asset(
-                                  'assets/images/favorite_cloth_icon_unselected.svg',
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          'Modern light clothes',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: kEncodeSansSemibold.copyWith(
-                            color: kDarkBrown,
-                            fontSize: SizeConfig.blockSizeHorizontal! * 3.5,
+          FutureBuilder<PostModel>(
+            future: getProductsApi (),
+            // Replace with your own function that fetches data from the API
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return const Text(
+                      'Error fetching data'); // Return an error widget if the API call fails
+                }
+                return MasonryGridView.count(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 23,
+                  itemCount: snapshot.data!.post!.length,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: kPaddingHorizontal,
+                  ),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const ProductDetailPage(),
                           ),
-                        ),
-                        Text(
-                          'Dress modern',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: kEncodeSansRagular.copyWith(
-                            color: kGrey,
-                            fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              '\$212.99',
-                              style: kEncodeSansSemibold.copyWith(
-                                color: kDarkBrown,
-                                fontSize: SizeConfig.blockSizeHorizontal! * 3.5,
+                        );
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Stack(
+                            children: [
+                              Positioned(
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(kBorderRadius),
+                                  child:
+                                  Image.network(snapshot.data!.post![index].img![0].url.toString()),
+                                ),
                               ),
-                            ),
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.star,
-                                  color: kYellow,
-                                  size: 16,
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  '5.0',
-                                  style: kEncodeSansRagular.copyWith(
-                                    color: kDarkBrown,
-                                    fontSize: SizeConfig.blockSizeHorizontal! *
-                                        3,
+                              Positioned(
+                                right: 12,
+                                top: 12,
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: SvgPicture.asset(
+                                    'assets/images/favorite_cloth_icon_unselected.svg',
                                   ),
                                 ),
-                              ],
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            snapshot.data!.post![index].product![0].productName.toString(),
+                            // Replace this with the title from your fetched data
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: kEncodeSansSemibold.copyWith(
+                              color: kDarkBrown,
+                              fontSize: SizeConfig.blockSizeHorizontal! * 3.5,
                             ),
-                          ],
-                        )
-                      ],
-                    ),
-                ),
+                          ),
+                          Text(
+                            snapshot.data!.post![index].product![0].category!.categoryName.toString(),
+                            //Replace this with the description from your fetched data
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: kEncodeSansRagular.copyWith(
+                              color: kGrey,
+                              fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                snapshot.data!.post![index].product![0].price.toString(),
+                                // Replace this with the price from your fetched data
+                                style: kEncodeSansSemibold.copyWith(
+                                  color: kDarkBrown,
+                                  fontSize:
+                                      SizeConfig.blockSizeHorizontal! * 3.5,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return const CircularProgressIndicator(); // Return a loading widget while the API call is in progress
+              }
+            },
           ),
         ],
       ),
     );
   }
 }
-

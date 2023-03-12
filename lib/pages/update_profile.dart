@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:second_hand_app/utils/text_string.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
-  const UpdateProfileScreen({Key? key}) : super(key: key);
+  UpdateProfileScreen({Key? key}) : super(key: key);
+
+  final user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +26,11 @@ class UpdateProfileScreen extends StatelessWidget {
               Stack(
                 children: [
                   SizedBox(
-                    width: 120,
-                    height: 120,
+                    width: 95,
+                    height: 95,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: const Image(
-                            image: AssetImage(tProfileImage))),
+                        child: Image.network(FirebaseAuth.instance.currentUser!.photoURL!)),
                   ),
                   Positioned(
                     bottom: 0,
@@ -85,7 +87,7 @@ class UpdateProfileScreen extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () =>
-                            Get.to(() => const UpdateProfileScreen()),
+                            Get.to(() => UpdateProfileScreen()),
                         style: ElevatedButton.styleFrom(
                             backgroundColor: tPrimaryColor,
                             side: BorderSide.none,

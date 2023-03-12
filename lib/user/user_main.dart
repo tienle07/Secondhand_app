@@ -17,7 +17,7 @@ class _UserMainState extends State<UserMain> {
     const HomePage(),
     const Cart(),
     const Saved(),
-    const Profile(),
+    Profile(),
   ];
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = const HomePage();
@@ -61,13 +61,13 @@ class _UserMainState extends State<UserMain> {
                       children: [
                         Icon(
                           Icons.home,
-                          color: currentTab == 0 ? Colors.blue : Colors.grey,
+                          color: currentTab == 0 ? Colors.deepOrange : Colors.grey,
                         ),
                         Text(
                           'Home',
                           style: TextStyle(
                               color:
-                                  currentTab == 0 ? Colors.blue : Colors.grey),
+                              currentTab == 0 ? Colors.deepOrange : Colors.grey),
                         )
                       ],
                     ),
@@ -85,13 +85,13 @@ class _UserMainState extends State<UserMain> {
                       children: [
                         Icon(
                           Icons.shopping_cart_outlined,
-                          color: currentTab == 1 ? Colors.blue : Colors.grey,
+                          color: currentTab == 1 ? Colors.deepOrange : Colors.grey,
                         ),
                         Text(
-                          'Cart',
+                          'Explore',
                           style: TextStyle(
                               color:
-                                  currentTab == 1 ? Colors.blue : Colors.grey),
+                              currentTab == 1 ? Colors.deepOrange : Colors.grey),
                         )
                       ],
                     ),
@@ -115,13 +115,13 @@ class _UserMainState extends State<UserMain> {
                       children: [
                         Icon(
                           Icons.favorite_border,
-                          color: currentTab == 2 ? Colors.blue : Colors.grey,
+                          color: currentTab == 2 ? Colors.deepOrange : Colors.grey,
                         ),
                         Text(
-                          'Saved',
+                          'Favourite',
                           style: TextStyle(
                               color:
-                                  currentTab == 2 ? Colors.blue : Colors.grey),
+                              currentTab == 2 ? Colors.deepOrange : Colors.grey),
                         )
                       ],
                     ),
@@ -130,7 +130,7 @@ class _UserMainState extends State<UserMain> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = const Profile();
+                        currentScreen =  Profile();
                         currentTab = 3;
                       });
                     },
@@ -139,13 +139,13 @@ class _UserMainState extends State<UserMain> {
                       children: [
                         Icon(
                           Icons.person,
-                          color: currentTab == 3 ? Colors.blue : Colors.grey,
+                          color: currentTab == 3 ? Colors.deepOrange : Colors.grey,
                         ),
                         Text(
                           'Profile',
                           style: TextStyle(
                               color:
-                                  currentTab == 3 ? Colors.blue : Colors.grey),
+                              currentTab == 3 ? Colors.deepOrange : Colors.grey),
                         )
                       ],
                     ),

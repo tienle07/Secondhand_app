@@ -1,13 +1,42 @@
 
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:second_hand_app/authentication/auth_service.dart';
 import 'package:second_hand_app/pages/update_profile.dart';
 import 'package:second_hand_app/utils/text_string.dart';
 import 'package:second_hand_app/widget/profile_menu.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({Key? key}) : super(key: key);
+  Profile({Key? key, this.pickedFile}) : super(key: key);
+
+  final user = FirebaseAuth.instance.currentUser;
+  PlatformFile? pickedFile;
+  UploadTask? uploadTask;
+
+  Future<void> selectFile(BuildContext context) async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => Profile(pickedFile: result.files.first)));
+  }
+
+  Future uploadFile() async {
+    final path = 'assets/images/avatar/${pickedFile!.name}';
+    final file = File(pickedFile!.path!);
+    final ref = FirebaseStorage.instance.ref().child(path);
+    ref.putFile(file);
+    final snapshot = await uploadTask!.whenComplete(() {});
+    final urlDownload = await snapshot.ref.getDownloadURL();
+    print('Download Link: $urlDownload');
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +63,11 @@ class Profile extends StatelessWidget {
               Stack(
                 children: [
                   SizedBox(
-                    width: 120,
-                    height: 120,
+                    width: 95,
+                    height: 95,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: const Image(image: AssetImage("assets/images/profile.png"))),
+                        child: Image.network(FirebaseAuth.instance.currentUser!.photoURL!)),
                   ),
                   Positioned(
                     bottom: 0,
@@ -56,13 +85,16 @@ class Profile extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              Text(tProfileHeading, style:Theme.of(context).textTheme.headlineSmall),
-              Text(tProfileSubHeading, style:Theme.of(context).textTheme.bodySmall),
+              Text( FirebaseAuth.instance.currentUser!.displayName!,
+                style:
+                const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+              Text(FirebaseAuth.instance.currentUser!.email!,
+                style: const TextStyle(fontSize: 16),),
               const SizedBox(height: 20),
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
-                  onPressed: () => Get.to(() => const UpdateProfileScreen()),
+                  onPressed: () => Get.to(() => UpdateProfileScreen()),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: tPrimaryColor, side: BorderSide.none, shape: const StadiumBorder()),
                   child: const Text(tEditProfile, style: TextStyle(color: tDarkColor)),
@@ -79,7 +111,7 @@ class Profile extends StatelessWidget {
               const Divider(color: Colors.grey),
               const SizedBox(height: 10),
               ProfileMenuWidget(title: "Information", icon: LineAwesomeIcons.info, onPress: () {}),
-              ProfileMenuWidget(title: "Logout", icon: LineAwesomeIcons.alternate_sign_out,  textColor: Colors.red, endIcon: false, onPress: () {}),
+              ProfileMenuWidget(title: "Logout", icon: LineAwesomeIcons.alternate_sign_out,  textColor: Colors.red, endIcon: false, onPress: () {AuthService().signOut();},),
             ],
           ),
         ),
