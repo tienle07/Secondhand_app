@@ -4,45 +4,67 @@ import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:second_hand_app/authentication/auth_service.dart';
 import 'package:second_hand_app/bindings/bindings.dart';
+import 'package:second_hand_app/home_screens.dart';
+import 'package:second_hand_app/services/notification_services.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  print("token: $fcmToken");
-  Future<void> _firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
-    // If you're going to use other Firebase services in the background, such as Firestore,
-    // make sure you call `initializeApp` before using other Firebase services.
-    await Firebase.initializeApp();
-
-    print("Handling a background message: ${message.messageId}");
-  }
-
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print('Got a message whilst in the foreground!');
-    print('Message data: ${message.data}');
-
-    if (message.notification != null) {
-      print('Message also contained a notification: ${message.notification} ');
-    }
-  });
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message)async {
+  await Firebase.initializeApp();
+  print(message.notification!.title.toString());
+  print(message.notification!.body.toString());
+  print(message.data.toString());
+
+}
+
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetMaterialApp(
+//       themeMode: ThemeMode.system,
+//       initialBinding: MyBindings(),
+//       debugShowCheckedModeBanner: false,
+//       home: AuthService().handleAuthState(),
+//       // home: const HomeScreen(),
+//     );
+//   }
+// }
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  NotificationServices notificationServices = NotificationServices();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    notificationServices.requestNotificationPermission();
+    notificationServices.firebaseInit(context);
+
+    //notificationServices.isTokenRefresh();
+    notificationServices.getDeviceToken().then((value){
+      print('fcmToken');
+      print(value);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +73,8 @@ class MyApp extends StatelessWidget {
       initialBinding: MyBindings(),
       debugShowCheckedModeBanner: false,
       home: AuthService().handleAuthState(),
+      // home: const HomeScreen(),
     );
   }
 }
+

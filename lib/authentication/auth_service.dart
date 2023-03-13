@@ -82,24 +82,24 @@ class AuthService {
     FirebaseAuth.instance.signOut();
   }
 
-  // Future<String> createProfile() async {
-  //   final String? idToken = await getAccessToken();
-  //   if (idToken != null) {
-  //     final response = await http.post(
-  //       Uri.parse('https://secondhandvinhome.herokuapp.com/doc/#/User/post_api_auth_login'),
-  //       headers: {
-  //         'Authorization': 'Bearer $idToken',
-  //       },
-  //     );
-  //
-  //     if (response.statusCode == 200) {
-  //       print('User authenticated on server.');
-  //       return response.body;
-  //     } else {
-  //       throw Exception('Failed to fetch data');
-  //     }
-  //   } else {
-  //     throw Exception('Access token not found');
-  //   }
-  // }
+  Future<String> createProfile() async {
+    final String? idToken = await getAccessToken();
+    if (idToken != null) {
+      final response = await http.post(
+        Uri.parse('https://secondhandvinhome.herokuapp.com/doc/#/User/post_api_auth_login'),
+        headers: {
+          'Authorization': 'Bearer $idToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print('User authenticated on server.');
+        return response.body;
+      } else {
+        throw Exception('Failed to fetch data');
+      }
+    } else {
+      throw Exception('Access token not found');
+    }
+  }
 }
