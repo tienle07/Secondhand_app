@@ -3,10 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:second_hand_app/controller/submit.dart';
+import 'package:second_hand_app/utils/constant.dart';
 //
-import '../utils/constant.dart';
-import '../widget/rep_textfiled.dart';
-import '../controller/submit.dart';
+import 'package:second_hand_app/view/widget/rep_textfiled.dart';
+
 
 class ResetPasswordScreen extends StatelessWidget {
   const ResetPasswordScreen({Key? key}) : super(key: key);

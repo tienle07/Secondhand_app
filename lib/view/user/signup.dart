@@ -2,10 +2,12 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:second_hand_app/user/login.dart';
+import 'package:second_hand_app/utils/constant.dart';
+import 'package:second_hand_app/view/user/login.dart';
+
 //
-import '../widget/rep_textfiled.dart';
-import '../utils/constant.dart';
+import 'package:second_hand_app/view/widget/rep_textfiled.dart';
+
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:second_hand_app/pages/cart.dart';
-import 'package:second_hand_app/pages/home.dart';
-import 'package:second_hand_app/pages/profile.dart';
-import 'package:second_hand_app/pages/saved.dart';
+import 'package:second_hand_app/view/pages/cart.dart';
+import 'package:second_hand_app/view/pages/home.dart';
+import 'package:second_hand_app/view/pages/posting_post.dart';
+import 'package:second_hand_app/view/pages/profile.dart';
+import 'package:second_hand_app/view/pages/saved.dart';
+
 
 class UserMain extends StatefulWidget {
   const UserMain({Key? key}) : super(key: key);
@@ -32,7 +34,12 @@ class _UserMainState extends State<UserMain> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.tealAccent,
         splashColor: Colors.amberAccent,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const PostingPost()),
+          );
+        },
         elevation: 0,
         child: const Icon(Icons.add),
       ),

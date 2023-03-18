@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:second_hand_app/authentication/auth_service.dart';
-import 'package:second_hand_app/user/forgotpass.dart';
-import 'package:second_hand_app/user/signup.dart';
+import 'package:second_hand_app/utils/constant.dart';
+import 'package:second_hand_app/view/user/forgotpass.dart';
+import 'package:second_hand_app/view/user/signup.dart';
 
-import '../utils/constant.dart';
-import '../widget/rep_textfiled.dart';
+import 'package:second_hand_app/view/widget/rep_textfiled.dart';
+
+
+
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -263,8 +266,8 @@ class PasswordTextFiled extends StatelessWidget {
   Widget build(BuildContext context) {
     return FadeInDown(
       delay: const Duration(milliseconds: 2300),
-      child: RepTextFiled(
-        sufIcon: const Icon(LineIcons.eyeSlash),
+      child: const RepTextFiled(
+        sufIcon: Icon(LineIcons.eyeSlash),
         icon: LineIcons.alternateUnlock,
         text: "Password",
       ),

@@ -8,9 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:second_hand_app/authentication/auth_service.dart';
-import 'package:second_hand_app/pages/update_profile.dart';
 import 'package:second_hand_app/utils/text_string.dart';
-import 'package:second_hand_app/widget/profile_menu.dart';
+import 'package:second_hand_app/view/pages/update_profile.dart';
+
+
+import '../widget/profile_menu.dart';
 
 class Profile extends StatelessWidget {
   Profile({Key? key, this.pickedFile}) : super(key: key);

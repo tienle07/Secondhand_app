@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:second_hand_app/user/user_main.dart';
-import 'package:second_hand_app/user/login.dart';
 import 'package:http/http.dart' as http;
+import 'package:second_hand_app/view/user/login.dart';
+import 'package:second_hand_app/view/user/user_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class AuthService {
 

@@ -2,11 +2,14 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:second_hand_app/user/resetpass.dart';
+
+import 'package:second_hand_app/utils/constant.dart';
+import 'package:second_hand_app/view/user/resetpass.dart';
+import 'package:second_hand_app/view/widget/rep_textfiled.dart';
 
 //
-import '../utils/constant.dart';
-import '../widget/rep_textfiled.dart';
+
+
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);

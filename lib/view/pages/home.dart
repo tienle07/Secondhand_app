@@ -5,9 +5,10 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:second_hand_app/model/post_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:second_hand_app/pages/product_detail_page.dart';
+
 import 'package:second_hand_app/utils/app_styles.dart';
 import 'package:second_hand_app/utils/size_config.dart';
+import 'package:second_hand_app/view/pages/product_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,8 +18,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomeState extends State<HomePage> {
-
-
   Future<PostModel> getProductsApi() async {
     final response = await http
         .get(Uri.parse('https://secondhandvinhome.herokuapp.com/api/post'));
@@ -46,16 +45,6 @@ class _HomeState extends State<HomePage> {
     'watch_icon',
   ];
 
-  List<String> images = [
-    'image-01.png',
-    'image-02.png',
-    'image-03.png',
-    'image-04.png',
-    'image-05.jpg',
-    'image-06.jpg',
-    'image-07.jpg',
-    'image-08.jpg',
-  ];
 
   int current = 0;
 
@@ -222,7 +211,7 @@ class _HomeState extends State<HomePage> {
             height: 32,
           ),
           FutureBuilder<PostModel>(
-            future: getProductsApi (),
+            future: getProductsApi(),
             // Replace with your own function that fetches data from the API
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
@@ -258,8 +247,9 @@ class _HomeState extends State<HomePage> {
                                 child: ClipRRect(
                                   borderRadius:
                                       BorderRadius.circular(kBorderRadius),
-                                  child:
-                                  Image.network(snapshot.data!.post![index].img![0].url.toString()),
+                                  child: Image.network(snapshot
+                                      .data!.post![index].img![0].url
+                                      .toString()),
                                 ),
                               ),
                               Positioned(
@@ -278,7 +268,8 @@ class _HomeState extends State<HomePage> {
                             height: 8,
                           ),
                           Text(
-                            snapshot.data!.post![index].product![0].productName.toString(),
+                            snapshot.data!.post![index].product![0].productName
+                                .toString(),
                             // Replace this with the title from your fetched data
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -288,7 +279,9 @@ class _HomeState extends State<HomePage> {
                             ),
                           ),
                           Text(
-                            snapshot.data!.post![index].product![0].category!.categoryName.toString(),
+                            snapshot.data!.post![index].product![0].category!
+                                .categoryName
+                                .toString(),
                             //Replace this with the description from your fetched data
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -300,20 +293,14 @@ class _HomeState extends State<HomePage> {
                           const SizedBox(
                             height: 8,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                snapshot.data!.post![index].product![0].price.toString(),
-                                // Replace this with the price from your fetched data
-                                style: kEncodeSansSemibold.copyWith(
-                                  color: kDarkBrown,
-                                  fontSize:
-                                      SizeConfig.blockSizeHorizontal! * 3.5,
-                                ),
-                              ),
-                            ],
+                          Text(
+                            snapshot.data!.post![index].product![0].price
+                                .toString(),
+                            // Replace this with the price from your fetched data
+                            style: kEncodeSansSemibold.copyWith(
+                              color: kDarkBrown,
+                              fontSize: SizeConfig.blockSizeHorizontal! * 3.5,
+                            ),
                           )
                         ],
                       ),

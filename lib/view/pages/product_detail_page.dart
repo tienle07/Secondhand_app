@@ -5,9 +5,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:readmore/readmore.dart';
 import 'package:second_hand_app/model/post_model.dart';
 import 'package:second_hand_app/utils/app_styles.dart';
+import 'package:second_hand_app/utils/counter.dart';
 import 'package:second_hand_app/utils/size_config.dart';
 import 'package:http/http.dart' as http;
-import '../utils/counter.dart';
 
 class ProductDetailPage extends StatefulWidget {
   const ProductDetailPage({Key? key}) : super(key: key);

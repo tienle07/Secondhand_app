@@ -58,6 +58,8 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   line_awesome_flutter: ^2.0.0
   app_settings: ^4.2.0
+  snippet_coder_utils: ^1.0.13
+  html_editor_enhanced: ^2.5.1
 
 
 dev_dependencies:

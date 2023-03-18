@@ -6,6 +6,7 @@ import 'package:second_hand_app/authentication/auth_service.dart';
 import 'package:second_hand_app/bindings/bindings.dart';
 import 'package:second_hand_app/home_screens.dart';
 import 'package:second_hand_app/services/notification_services.dart';
+import 'package:second_hand_app/view/pages/posting_post.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:second_hand_app/utils/constant.dart';
 //
-import '../utils/constant.dart';
+
 
 class RepTextFiled extends StatelessWidget {
   final IconData icon;
@@ -30,7 +31,7 @@ class RepTextFiled extends StatelessWidget {
               child: TextField(
                 readOnly: true, // * Just for Debug
                 cursorColor: Colors.black,
-                style: TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.black),
                 showCursor: true,
                 // cursorColor:Colors.red,
                 decoration: InputDecoration(
