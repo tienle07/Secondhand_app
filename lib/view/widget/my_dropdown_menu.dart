@@ -4,10 +4,10 @@ import 'package:second_hand_app/model/drop_list_model.dart';
 import 'dart:convert';
 
 
-
 class MyDropdownMenu extends StatefulWidget {
 
   final Function(DropdownItem?) onItemSelected;
+
   const MyDropdownMenu({super.key, required this.onItemSelected});
 
   @override
@@ -26,7 +26,8 @@ class _MyDropdownMenuState extends State<MyDropdownMenu> {
   }
 
   Future<void> _getDropdownItems() async {
-    final url = Uri.parse('https://secondhandvinhome.herokuapp.com/api/category');
+    final url = Uri.parse(
+        'https://secondhandvinhome.herokuapp.com/api/category');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -41,22 +42,54 @@ class _MyDropdownMenuState extends State<MyDropdownMenu> {
     }
   }
 
+//   @override
+//   Widget build(BuildContext context) {
+//     return DropdownButton<DropdownItem>(
+//       value: _selectedItem,
+//       onChanged: (value) {
+//         setState(() {
+//           _selectedItem = value;
+//         });
+//         widget.onItemSelected(_selectedItem);
+//       },
+//       items: _dropdownItems
+//           ?.map((item) => DropdownMenuItem<DropdownItem>(
+//         value: item,
+//         child: Text(item.categoryName!),
+//       ))
+//           .toList(),
+//     );
+//   }
+
+
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<DropdownItem>(
-      value: _selectedItem,
-      onChanged: (value) {
-        setState(() {
-          _selectedItem = value;
-        });
-        widget.onItemSelected(_selectedItem);
-      },
-      items: _dropdownItems
-          ?.map((item) => DropdownMenuItem<DropdownItem>(
-        value: item,
-        child: Text(item.categoryName!),
-      ))
-          .toList(),
+    return SizedBox(
+      // height: 200, // Fixed height of the dropdown
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        controller: ScrollController(),
+        child: DropdownButtonFormField<DropdownItem>(
+          value: _selectedItem,
+          decoration: const InputDecoration(
+            hintText: 'Select Category',
+            border: OutlineInputBorder(),
+          ),
+          items: _dropdownItems
+              ?.map((item) =>
+              DropdownMenuItem<DropdownItem>(
+                value: item,
+                child: Text(item.categoryName!),
+              ))
+              .toList(),
+          onChanged: (value) {
+            setState(() {
+              _selectedItem = value;
+            });
+            widget.onItemSelected(_selectedItem);
+          },
+        ), // Required when using a scrollbar
+      ),
     );
   }
 }
