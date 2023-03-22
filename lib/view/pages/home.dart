@@ -219,6 +219,10 @@ class _HomeState extends State<HomePage> {
                   return const Text(
                       'Error fetching data'); // Return an error widget if the API call fails
                 }
+                if (snapshot.data == null || snapshot.data!.post == null) {
+                  return const Text(
+                      'No data found'); // Return a widget if the data is null
+                }
                 return MasonryGridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),

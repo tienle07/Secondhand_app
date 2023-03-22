@@ -2,11 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:second_hand_app/authentication/auth_service.dart';
 import 'package:second_hand_app/bindings/bindings.dart';
-import 'package:second_hand_app/home_screens.dart';
 import 'package:second_hand_app/services/notification_services.dart';
-import 'package:second_hand_app/view/pages/posting_post.dart';
+import 'package:second_hand_app/view/widget/upload_file.dart';
+
+import 'authentication/auth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -74,7 +74,7 @@ class _MyAppState extends State<MyApp> {
       initialBinding: MyBindings(),
       debugShowCheckedModeBanner: false,
       home: AuthService().handleAuthState(),
-      // home: const HomeScreen(),
+      // home: const UploadPage(),
     );
   }
 }

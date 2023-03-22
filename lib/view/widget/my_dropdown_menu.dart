@@ -42,26 +42,6 @@ class _MyDropdownMenuState extends State<MyDropdownMenu> {
     }
   }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return DropdownButton<DropdownItem>(
-//       value: _selectedItem,
-//       onChanged: (value) {
-//         setState(() {
-//           _selectedItem = value;
-//         });
-//         widget.onItemSelected(_selectedItem);
-//       },
-//       items: _dropdownItems
-//           ?.map((item) => DropdownMenuItem<DropdownItem>(
-//         value: item,
-//         child: Text(item.categoryName!),
-//       ))
-//           .toList(),
-//     );
-//   }
-
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
