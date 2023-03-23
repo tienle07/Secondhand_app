@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:second_hand_app/model/post_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:second_hand_app/model/Post.dart';
 
 import 'package:second_hand_app/utils/app_styles.dart';
 import 'package:second_hand_app/utils/size_config.dart';
@@ -18,14 +18,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomeState extends State<HomePage> {
-  Future<PostModel> getProductsApi() async {
-    final response = await http
-        .get(Uri.parse('https://secondhandvinhome.herokuapp.com/api/post'));
-    var data = jsonDecode(response.body.toString());
-    if (response.statusCode == 200) {
-      return PostModel.fromJson(data);
-    } else {
-      return PostModel.fromJson(data);
+
+
+  Future<List<Post>> getPostsApi() async {
+    try {
+      final response = await http.get(Uri.parse('https://secondhandvinhome.herokuapp.com/api/post'));
+      if (response.statusCode == 200) {
+        return (jsonDecode(response.body) as List<dynamic>)
+            .map((e) => Post.fromJson(e))
+            .toList();
+      } else {
+        throw Exception('Failed to load posts: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error fetching data: $e');
     }
   }
 
@@ -44,7 +50,6 @@ class _HomeState extends State<HomePage> {
     'hat_icon',
     'watch_icon',
   ];
-
 
   int current = 0;
 
@@ -210,30 +215,28 @@ class _HomeState extends State<HomePage> {
           const SizedBox(
             height: 32,
           ),
-          FutureBuilder<PostModel>(
-            future: getProductsApi(),
-            // Replace with your own function that fetches data from the API
+
+          FutureBuilder<List<Post>>(
+            future: getPostsApi(),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasError) {
-                  return const Text(
-                      'Error fetching data'); // Return an error widget if the API call fails
-                }
-                if (snapshot.data == null || snapshot.data!.post == null) {
-                  return const Text(
-                      'No data found'); // Return a widget if the data is null
-                }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return const Text('Error fetching data');
+              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                // Display the fetched posts using a GridView
                 return MasonryGridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 23,
-                  itemCount: snapshot.data!.post!.length,
+                  itemCount: snapshot.data!.length,
                   padding: const EdgeInsets.symmetric(
                     horizontal: kPaddingHorizontal,
                   ),
                   itemBuilder: (context, index) {
+                    final post = snapshot.data![index];
                     return GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(
@@ -250,10 +253,9 @@ class _HomeState extends State<HomePage> {
                               Positioned(
                                 child: ClipRRect(
                                   borderRadius:
-                                      BorderRadius.circular(kBorderRadius),
-                                  child: Image.network(snapshot
-                                      .data!.post![index].img![0].url
-                                      .toString()),
+                                  BorderRadius.circular(kBorderRadius),
+                                  child: Image.network(
+                                      post.img![0].url.toString()),
                                 ),
                               ),
                               Positioned(
@@ -272,8 +274,7 @@ class _HomeState extends State<HomePage> {
                             height: 8,
                           ),
                           Text(
-                            snapshot.data!.post![index].product![0].productName
-                                .toString(),
+                            post.product![0].productName.toString(),
                             // Replace this with the title from your fetched data
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -283,9 +284,7 @@ class _HomeState extends State<HomePage> {
                             ),
                           ),
                           Text(
-                            snapshot.data!.post![index].product![0].category!
-                                .categoryName
-                                .toString(),
+                            post.category!.categoryName.toString(),
                             //Replace this with the description from your fetched data
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -298,8 +297,7 @@ class _HomeState extends State<HomePage> {
                             height: 8,
                           ),
                           Text(
-                            snapshot.data!.post![index].product![0].price
-                                .toString(),
+                            post.product![0].price.toString(),
                             // Replace this with the price from your fetched data
                             style: kEncodeSansSemibold.copyWith(
                               color: kDarkBrown,
@@ -312,7 +310,8 @@ class _HomeState extends State<HomePage> {
                   },
                 );
               } else {
-                return const CircularProgressIndicator(); // Return a loading widget while the API call is in progress
+                // Return a widget to display  when there's no data
+                return const Text('No data found');
               }
             },
           ),

@@ -1,41 +1,10 @@
-class PostModel {
-  PostModel({
-      String? msg, 
-      List<Post>? post,}){
-    _msg = msg;
-    _post = post;
-}
-
-  PostModel.fromJson(dynamic json) {
-    _msg = json['msg'];
-    if (json['post'] != null) {
-      _post = [];
-      json['post'].forEach((v) {
-        _post?.add(Post.fromJson(v));
-      });
-    }
-  }
-  String? _msg;
-  List<Post>? _post;
-PostModel copyWith({  String? msg,
-  List<Post>? post,
-}) => PostModel(  msg: msg ?? _msg,
-  post: post ?? _post,
-);
-  String? get msg => _msg;
-  List<Post>? get post => _post;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['msg'] = _msg;
-    if (_post != null) {
-      map['post'] = _post?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-
-}
-
+/// id : "1ab73f1f-f254-4367-addc-d44b4fa0204f"
+/// title : "dsad"
+/// like : false
+/// description : "Tủ lạnh"
+/// img : [{"url":"https://firebasestorage.googleapis.com/v0/b/secondhandvh-44c3e.appspot.com/o/images%2Fb3f10c87-ea30-4b80-8f22-922670c5cdab?alt=media&token=ac37e77f-4d4d-41d0-9a02-3ca3601110a7"},{"url":"https://firebasestorage.googleapis.com/v0/b/secondhandvh-44c3e.appspot.com/o/images%2Fc348c0d2-cbfd-4970-be11-1c226870a110?alt=media&token=f15a27f1-15c7-4a8b-8c17-101e0484fdd7"},{"url":"https://firebasestorage.googleapis.com/v0/b/secondhandvh-44c3e.appspot.com/o/images%2F9c05c0b9-4327-43e5-918a-3db96f4fe980?alt=media&token=a2b9a4d0-e829-431d-816f-3afa9fef099c"},{"url":"https://firebasestorage.googleapis.com/v0/b/secondhandvh-44c3e.appspot.com/o/images%2F690904cb-423f-437b-9b6c-a05ae02f0549?alt=media&token=be523802-703b-4f8f-b3b6-3fdec94f0757"}]
+/// category : {"categoryName":"Đồ gia dụng","attribute":"Chua ro"}
+/// product : [{"productName":"Tủ lạnh","price":"100000"}]
 
 class Post {
   Post({
@@ -43,15 +12,15 @@ class Post {
       String? title, 
       bool? like, 
       String? description, 
-      String? userId,
       List<Img>? img, 
+      Category? category, 
       List<Product>? product,}){
     _id = id;
     _title = title;
     _like = like;
     _description = description;
-    _userId = userId;
     _img = img;
+    _category = category;
     _product = product;
 }
 
@@ -60,13 +29,13 @@ class Post {
     _title = json['title'];
     _like = json['like'];
     _description = json['description'];
-    _userId = json['userId'];
     if (json['img'] != null) {
       _img = [];
       json['img'].forEach((v) {
         _img?.add(Img.fromJson(v));
       });
     }
+    _category = json['category'] != null ? Category.fromJson(json['category']) : null;
     if (json['product'] != null) {
       _product = [];
       json['product'].forEach((v) {
@@ -78,30 +47,30 @@ class Post {
   String? _title;
   bool? _like;
   String? _description;
-  String? _userId;
   List<Img>? _img;
+  Category? _category;
   List<Product>? _product;
 Post copyWith({  String? id,
   String? title,
   bool? like,
   String? description,
-  String? userId,
   List<Img>? img,
+  Category? category,
   List<Product>? product,
 }) => Post(  id: id ?? _id,
   title: title ?? _title,
   like: like ?? _like,
   description: description ?? _description,
-  userId: userId ?? _userId,
   img: img ?? _img,
+  category: category ?? _category,
   product: product ?? _product,
 );
   String? get id => _id;
   String? get title => _title;
   bool? get like => _like;
   String? get description => _description;
-  String? get userId => _userId;
   List<Img>? get img => _img;
+  Category? get category => _category;
   List<Product>? get product => _product;
 
   Map<String, dynamic> toJson() {
@@ -110,9 +79,11 @@ Post copyWith({  String? id,
     map['title'] = _title;
     map['like'] = _like;
     map['description'] = _description;
-    map['userId'] = _userId;
     if (_img != null) {
       map['img'] = _img?.map((v) => v.toJson()).toList();
+    }
+    if (_category != null) {
+      map['category'] = _category?.toJson();
     }
     if (_product != null) {
       map['product'] = _product?.map((v) => v.toJson()).toList();
@@ -122,58 +93,42 @@ Post copyWith({  String? id,
 
 }
 
-
+/// productName : "Tủ lạnh"
+/// price : "100000"
 
 class Product {
   Product({
       String? productName, 
-      String? price, 
-      bool? status, 
-      Category? category,}){
+      String? price,}){
     _productName = productName;
     _price = price;
-    _status = status;
-    _category = category;
 }
 
   Product.fromJson(dynamic json) {
     _productName = json['productName'];
     _price = json['price'];
-    _status = json['status'];
-    _category = json['category'] != null ? Category.fromJson(json['category']) : null;
   }
   String? _productName;
   String? _price;
-  bool? _status;
-  Category? _category;
 Product copyWith({  String? productName,
   String? price,
-  bool? status,
-  Category? category,
 }) => Product(  productName: productName ?? _productName,
   price: price ?? _price,
-  status: status ?? _status,
-  category: category ?? _category,
 );
   String? get productName => _productName;
   String? get price => _price;
-  bool? get status => _status;
-  Category? get category => _category;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['productName'] = _productName;
     map['price'] = _price;
-    map['status'] = _status;
-    if (_category != null) {
-      map['category'] = _category?.toJson();
-    }
     return map;
   }
 
 }
 
-
+/// categoryName : "Đồ gia dụng"
+/// attribute : "Chua ro"
 
 class Category {
   Category({
@@ -206,6 +161,7 @@ Category copyWith({  String? categoryName,
 
 }
 
+/// url : "https://firebasestorage.googleapis.com/v0/b/secondhandvh-44c3e.appspot.com/o/images%2Fb3f10c87-ea30-4b80-8f22-922670c5cdab?alt=media&token=ac37e77f-4d4d-41d0-9a02-3ca3601110a7"
 
 class Img {
   Img({
